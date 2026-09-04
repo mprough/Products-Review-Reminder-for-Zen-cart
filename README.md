@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.0 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.1 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 ## Features
 
@@ -22,7 +22,7 @@ Products Review Reminder helps a shop owner find eligible completed orders and m
 1. Back up the shop files and database.
 2. Copy the `files` directory contents into the shop root.
 3. In Zen Cart admin, open **Modules > Plugin Manager**.
-4. Install **Products Review Reminder**.
+4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
 6. Open **Tools > Products Review Reminder** to review eligible orders and send selected reminders.
 
@@ -39,7 +39,7 @@ The subject, greeting, introduction, and closing accept `{customer_name}`, `{sto
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.0 through **Modules > Plugin Manager**.
+6. Install version 2.0.1 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
