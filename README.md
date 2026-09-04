@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.8 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.9 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 ## Features
 
@@ -31,9 +31,9 @@ Products Review Reminder helps a shop owner find eligible completed orders and m
 
 The email fields affect only review reminders sent by this plugin. They do not alter Zen Cart's other email templates.
 
-## Email tokens
+## Email shortcodes
 
-The subject, greeting, introduction, and closing accept `{customer_name}`, `{store_name}`, and `{order_number}`. Product information, review URLs, and opt-out URLs are protected functional content.
+The Configuration page lists the available email shortcodes. The subject, greeting, introduction, and closing accept `{customer_name}`, `{store_name}`, and `{order_number}`. Copy them exactly, including the braces. Product information, review URLs, and opt-out URLs are protected functional content.
 
 ## Upgrade from 1.0.4
 
@@ -42,7 +42,7 @@ The subject, greeting, introduction, and closing accept `{customer_name}`, `{sto
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.8 through **Modules > Plugin Manager**.
+6. Install version 2.0.9 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.

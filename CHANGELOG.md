@@ -1,5 +1,13 @@
 # Change history
 
+## 2.0.9
+
+- Added an Available email shortcodes row directly above the editable email settings.
+- Listed each shortcode and the fields where it works.
+- Updated the documentation to use the same shortcode terminology shown in admin.
+- Left-aligned the review content within Zen Cart's branded email wrapper and added email-safe product/image widths.
+- Made emailed opt-out tokens independent of an order's historical email address so valid links work without a customer login.
+
 ## 2.0.8
 
 - Made the test format switch change both the on-page preview and the sent test message.
