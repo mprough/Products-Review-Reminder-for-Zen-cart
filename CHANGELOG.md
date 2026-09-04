@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.3
+
+- Added an admin preview that renders a reminder from any real order without sending it.
+- Added a test send to the store owner address without contacting the customer or recording the order as contacted.
+- Removed the working customer opt-out link from previews and test messages.
+- Added clear success and error feedback for email inspection actions.
+
 ## 2.0.2
 
 - Renamed the confusing Eligible date window setting to How far back to look.
