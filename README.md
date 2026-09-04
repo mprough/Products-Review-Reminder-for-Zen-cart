@@ -2,6 +2,8 @@
 
 Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.13 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
+This plugin is intentionally administrator-driven. It does not schedule, queue, or send review reminders in the background.
+
 ## Features
 
 - Lists orders after a configurable order status and waiting period.
@@ -12,6 +14,8 @@ Products Review Reminder helps a shop owner find eligible completed orders and m
 - Provides HTML and plain-text email content.
 - Previews a reminder using any real order without sending or recording it.
 - Sends a test copy to the store owner without contacting the customer or recording the order.
+- Sends an optional live opt-out test to the store owner using a selected customer's signed link.
+- Checks that customer's opt-out status and restores the customer after testing.
 - Includes secure review links and a signed one-click opt-out link.
 - Installs through Zen Cart Plugin Manager without core-file changes.
 
@@ -23,7 +27,7 @@ Products Review Reminder helps a shop owner find eligible completed orders and m
 ## Installation
 
 1. Back up the shop files and database.
-2. Copy the `files` directory contents into the shop root.
+2. If using the production ZIP, copy its `zc_plugins` directory into the shop root. If using the GitHub source, copy the contents of its `files` directory into the shop root.
 3. In Zen Cart admin, open **Modules > Plugin Manager**.
 4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
@@ -49,6 +53,15 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
 
+## Configuration
+
+- **Trigger order status** starts the waiting period when an order reaches the selected status.
+- **Waiting period** is the number of days the plugin waits after that status change.
+- **How far back to look** is the additional eligibility window after the waiting period. A waiting period of 14 days and a lookback of 30 days includes orders that reached the trigger status 14 to 44 days ago.
+- **Maximum products per email** limits the products shown in each reminder. Use `0` for no limit.
+- **Maximum reminders per batch** limits the eligible orders displayed and processed at once. The default is 10.
+- The six email wording fields control only this plugin's reminder content.
+
 ## Preview and test email
 
 Open **Tools > Products Review Reminder**. In **Inspect an email**, enter any real order number. The order does not need to be inside the eligibility window.
@@ -70,6 +83,30 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 
 Plugin Manager removes plugin registration and settings. Reminder history and customer opt-outs remain to prevent accidental repeat email and data loss.
 
+The retained tables are:
+
+| Table | Purpose | Removed on uninstall |
+| --- | --- | --- |
+| `addon_review_reminder_log` | Records orders successfully sent a reminder | No |
+| `addon_review_reminder_optout` | Records customers who declined future reminders | No |
+
+The actual table names include the shop's configured database prefix. Remove these tables manually only when their history is no longer needed.
+
+## Troubleshooting
+
+- If neither admin menu appears after installation, sign out of Zen Cart admin and sign back in. The plugin also repairs missing menu registrations during admin startup.
+- If a test message is plain text, confirm the format selected in the inspection panel. Real reminders continue to honor the recipient customer's Zen Cart email preference.
+- If an opt-out test link includes `test=1`, it is the safe routing test and cannot change a customer record. Use **Send live opt-out test** for the complete database test.
+- If the eligible-order list is empty, confirm the trigger status, waiting period, lookback window, prior reminder history, and customer opt-out status.
+
+## Documentation
+
+- [Added features](docs/ADDED_FEATURES.md)
+- [Work completed on September 4, 2026](docs/WORK_COMPLETED_2026-09-04.md)
+- [Change history](CHANGELOG.md)
+- [Security policy](SECURITY.md)
+- [License](LICENSE)
+
 ## Support
 
 Report reproducible bugs through the [PRO-Webs helpdesk](https://prowebsinc.zohodesk.com/portal/en/newticket). Installation, configuration, and customization are not included with free distribution.
@@ -78,4 +115,8 @@ See the [Zen Cart plugin listing](https://www.zen-cart.com/plugins/products-revi
 
 ## License
 
-GNU General Public License version 2. This software is provided without warranty.
+GNU General Public License version 2. See [LICENSE](LICENSE). This free software is provided without warranty. Installation, configuration, and customization are not included.
+
+## Credits
+
+Originally created by Will Vasconcelos. Modern Plugin Manager packaging, maintenance, compatibility work, testing tools, documentation, and current releases are by Melanie Prough, [PRO-Webs, Inc.](https://pro-webs.net/).
