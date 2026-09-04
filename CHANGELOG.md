@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.8
+
+- Made the test format switch change both the on-page preview and the sent test message.
+- Replaced the admin-copy suffix with a request-scoped Zen Cart email-format observer.
+- Send exactly one test message in the selected HTML or Plain text format.
+- Leave real customer reminder format selection unchanged.
+
 ## 2.0.7
 
 - Send store-owner test messages through Zen Cart's admin-copy email path.
