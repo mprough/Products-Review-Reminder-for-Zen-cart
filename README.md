@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.4 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.5 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 ## Features
 
@@ -42,7 +42,7 @@ The subject, greeting, introduction, and closing accept `{customer_name}`, `{sto
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.4 through **Modules > Plugin Manager**.
+6. Install version 2.0.5 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -54,7 +54,7 @@ Open **Tools > Products Review Reminder**. In **Inspect an email**, enter any re
 - **Preview email** renders the message in admin without sending it.
 - **Send test to store owner** sends the rendered message to `STORE_OWNER_EMAIL_ADDRESS`. In Zen Cart admin, this is **Configuration > Email Options > Email Address (sent FROM)**.
 
-Preview and test actions do not contact the customer, add a reminder-log record, or provide a working opt-out link. They use the order's customer name and products so the result matches a real reminder closely.
+Preview and test actions do not contact the customer or add a reminder-log record. They use the order's customer name and products so the result matches a real reminder closely. The test email includes a safe opt-out test link that confirms the page works without changing any customer preferences.
 
 ## Sending batches
 

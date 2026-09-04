@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.5
+
+- Replaced the omitted test opt-out text with a safe, clickable opt-out test URL.
+- Added a test response on the real opt-out page that confirms routing without changing customer preferences.
+- Prevented mail clients from combining the review URL with adjacent opt-out test text.
+
 ## 2.0.4
 
 - Corrected Zen Cart email-result handling so successful test sends display success.
