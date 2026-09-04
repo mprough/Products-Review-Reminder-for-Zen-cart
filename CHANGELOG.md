@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.10
+
+- Decoded Zen Cart's HTML-safe URL separators before placing links in plain-text email bodies.
+- Escaped HTML email URLs exactly once so query parameters such as `test=1` and signed opt-out tokens reach the storefront correctly.
+- Added an explicit white message background and email-safe full-width wrapper around the left-aligned review content.
+
 ## 2.0.9
 
 - Added an Available email shortcodes row directly above the editable email settings.
