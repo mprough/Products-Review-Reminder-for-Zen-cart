@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.12
+
+- Replaced the newer page-body bridge with a Zen Cart 2.x-compatible observer that supplies the encapsulated My Reviews and opt-out template paths after normal template resolution.
+- Added a 12px email-safe gap between the displayed subject and the test notice or message body.
+- Normalized HTML entities in all editable email fields for both the configuration editor and generated HTML or plain-text messages, including values expanded by earlier saves.
+- Preserved normal Enter-key line breaks from every editable body field in HTML and plain-text messages while keeping entered HTML safely escaped.
+
 ## 2.0.11
 
 - Added Plugin Manager page-body bridges so Zen Cart 2.x loads the encapsulated My Reviews and opt-out templates instead of looking for core template files.

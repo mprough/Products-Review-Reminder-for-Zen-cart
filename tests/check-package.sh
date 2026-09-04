@@ -2,7 +2,7 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.11"
+version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.12"
 
 test -f "$version_root/manifest.php"
 test -f "$version_root/Installer/ScriptedInstaller.php"
@@ -12,8 +12,7 @@ test -f "$version_root/catalog/addon_my_reviews.php"
 test -f "$version_root/catalog/email/email_template_addon_review_reminder.html"
 test -f "$version_root/catalog/includes/languages/english/lang.addon_my_reviews.php"
 test -f "$version_root/catalog/includes/languages/english/lang.addon_reviews_reminder_optout.php"
-test -f "$version_root/catalog/includes/modules/pages/addon_my_reviews/main_template_vars.php"
-test -f "$version_root/catalog/includes/modules/pages/addon_reviews_reminder_optout/main_template_vars.php"
+test -f "$version_root/catalog/includes/classes/observers/auto.products_review_reminder_template_loader.php"
 
 if command -v php >/dev/null 2>&1; then
     find "$root/files" -type f -name '*.php' -print0 | xargs -0 -n1 php -l
