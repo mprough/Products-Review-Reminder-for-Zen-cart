@@ -120,6 +120,7 @@ class ScriptedInstaller extends ScriptedInstallBase
         }
         $this->executeInstallerSql("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key IN ('REVIEWS_REMINDER_COOLOFF_PERIOD', 'REVIEWS_REMINDER_TIME_WINDOW', 'REVIEWS_REMINDER_AUTOMATIC')");
         $this->executeInstallerSql('UPDATE ' . TABLE_CONFIGURATION . " SET configuration_value = '2.0.0', set_function = 'zen_cfg_select_option(array(\\'2.0.0\\'),' WHERE configuration_key = 'PLUGIN_PRODUCTS_REVIEW_REMINDER_VERSION'");
+        $this->executeInstallerSql("DELETE FROM " . TABLE_ADMIN_PAGES . " WHERE page_key IN ('configProductReviewReminder', 'toolsProductReviewReminder')");
 
         if (!zen_page_key_exists('configProductsReviewReminder')) {
             zen_register_admin_page('configProductsReviewReminder', 'BOX_CONFIGURATION_REVIEW_REMINDER', 'FILENAME_CONFIGURATION', "gID=$groupId", 'configuration', 'Y', $groupId);
