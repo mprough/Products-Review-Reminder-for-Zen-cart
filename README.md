@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.12 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.13 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 ## Features
 
@@ -44,7 +44,7 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.12 through **Modules > Plugin Manager**.
+6. Install version 2.0.13 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -57,6 +57,8 @@ Open **Tools > Products Review Reminder**. In **Inspect an email**, enter any re
 - **Send test to store owner** sends the rendered message to `STORE_OWNER_EMAIL_ADDRESS`. In Zen Cart admin, this is **Configuration > Email Options > Email Address (sent FROM)**.
 
 Preview and test actions do not contact the customer or add a reminder-log record. They use the order's customer name and products so the result matches a real reminder closely. The test email includes a safe opt-out test link that confirms the page works without changing any customer preferences.
+
+For a complete opt-out test, choose an order for a customer record you can safely change and click **Send live opt-out test**. The message is sent only to the store owner, but its signed link represents the selected order's customer. Clicking the link adds that customer to the reminder opt-out table. Return to the same admin panel and click **Check customer status** to confirm the database change, then click **Restore customer opt-in** to remove only that customer's opt-out record.
 
 The test panel includes an HTML or Plain text format switch. It changes both the on-page preview and the single test message sent to the store owner. A request-scoped email observer applies that choice only to this plugin's test message. The selected order customer's email preference applies only when a real reminder is sent to that customer.
 

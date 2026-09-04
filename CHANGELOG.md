@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.13
+
+- Added a live opt-out test that sends the store owner a signed link for the customer attached to the selected order.
+- Added a customer opt-out status check and a restore button that removes only that customer's opt-out record.
+- Hid the empty order packing list and stray remove button when no eligible order is selected.
+
 ## 2.0.12
 
 - Replaced the newer page-body bridge with a Zen Cart 2.x-compatible observer that supplies the encapsulated My Reviews and opt-out template paths after normal template resolution.
