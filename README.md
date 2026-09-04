@@ -51,7 +51,7 @@ The installer reuses both existing database tables so previous send history and 
 Open **Tools > Products Review Reminder**. In **Inspect an email**, enter any real order number. The order does not need to be inside the eligibility window.
 
 - **Preview email** renders the message in admin without sending it.
-- **Send test to store owner** sends the rendered message to `STORE_OWNER_EMAIL_ADDRESS`.
+- **Send test to store owner** sends the rendered message to `STORE_OWNER_EMAIL_ADDRESS`. In Zen Cart admin, this is **Configuration > Email Options > Email Address (sent FROM)**.
 
 Preview and test actions do not contact the customer, add a reminder-log record, or provide a working opt-out link. They use the order's customer name and products so the result matches a real reminder closely.
 
