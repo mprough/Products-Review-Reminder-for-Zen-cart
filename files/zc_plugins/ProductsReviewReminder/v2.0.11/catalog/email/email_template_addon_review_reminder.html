@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="$CHARSET">
+    <base href="$BASE_HREF">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        $EMAIL_COMMON_CSS
+        body { width:600px !important; max-width:100% !important; margin:0 !important; background:#ffffff !important; text-align:left !important; }
+        .holder { width:600px !important; max-width:100% !important; background:#ffffff !important; }
+        .header, .content, .footer { background:#ffffff !important; }
+        .header img { display:block; max-width:100% !important; height:auto !important; }
+    </style>
+</head>
+<body id="addon_review_reminder" bgcolor="#ffffff" style="width:600px;max-width:100%;background:#ffffff;margin:0;text-align:left">
+<div class="holder" style="width:600px;max-width:100%;background:#ffffff">
+    <div class="header" style="background:#ffffff">
+        <img src="$EMAIL_LOGO_FILE" alt="$EMAIL_LOGO_ALT_TEXT" title="$EMAIL_LOGO_ALT_TITLE_TEXT" width="$EMAIL_LOGO_WIDTH" height="$EMAIL_LOGO_HEIGHT" border="0">
+        $EXTRA_HEADER_INFO
+    </div>
+    <div class="content" style="background:#ffffff">
+        <div>$EMAIL_SUBJECT</div>
+        <div>$EMAIL_MESSAGE_HTML</div>
+    </div>
+    <div class="footer" style="background:#ffffff">
+        <div class="copyright">$EMAIL_FOOTER_COPYRIGHT</div>
+    </div>
+</div>
+<div class="disclaimer">
+    <div class="disclaimer1">$EMAIL_DISCLAIMER</div>
+    <div class="disclaimer2">$EMAIL_SPAM_DISCLAIMER</div>
+</div>
+<div class="extra-info">$EXTRA_INFO</div>
+</body>
+</html>

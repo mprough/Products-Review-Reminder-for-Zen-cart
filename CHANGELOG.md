@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.11
+
+- Added Plugin Manager page-body bridges so Zen Cart 2.x loads the encapsulated My Reviews and opt-out templates instead of looking for core template files.
+- Registered the plugin email template directory with Zen Cart's email service.
+- Retained the configured store email logo while changing the review-reminder wrapper to a responsive 600px white layout.
+
 ## 2.0.10
 
 - Decoded Zen Cart's HTML-safe URL separators before placing links in plain-text email bodies.
