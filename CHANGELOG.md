@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.2
+
+- Renamed the confusing Eligible date window setting to How far back to look.
+- Rewrote its description to explain exactly how it combines with the waiting period.
+- Changed every editable email field from a single-line input to a multiline textarea.
+- Replaced the deprecated hand-built admin page head with Zen Cart's current admin_html_head.php loader.
+
 ## 2.0.1
 
 - Added Zen Cart 2.2 language-array files for the Tools page and both admin menu labels.
