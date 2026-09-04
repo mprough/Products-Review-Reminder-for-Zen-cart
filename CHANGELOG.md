@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.6
+
+- Added modern array-based storefront language files for the review and opt-out pages.
+- Fixed the undefined `NAVBAR_TITLE` fatal error on supported Zen Cart versions that require array language files.
+- Kept the legacy language files for compatibility with earlier supported Zen Cart versions.
+
 ## 2.0.5
 
 - Replaced the omitted test opt-out text with a safe, clickable opt-out test URL.
