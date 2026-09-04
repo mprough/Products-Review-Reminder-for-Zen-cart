@@ -1,5 +1,13 @@
 # Change history
 
+## 2.0.4
+
+- Corrected Zen Cart email-result handling so successful test sends display success.
+- Corrected reminder logging so a successfully sent customer email is recorded and a failed send is not.
+- Added a configurable maximum reminders per batch, defaulting to 10, for high-volume shops.
+- Corrected generated review and opt-out URLs so Zen Cart does not create a duplicated `main_page` parameter.
+- Guarded the customer review page when no customer session exists.
+
 ## 2.0.3
 
 - Added an admin preview that renders a reminder from any real order without sending it.

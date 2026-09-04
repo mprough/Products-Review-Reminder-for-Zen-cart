@@ -1,12 +1,13 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.3 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.4 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 ## Features
 
 - Lists orders after a configurable order status and waiting period.
 - Excludes orders already contacted and customers who opted out.
 - Sends reminders only when the administrator explicitly selects orders and submits the form.
+- Limits each displayed and submitted batch to a configurable number of reminders, 10 by default.
 - Lets the shop owner edit this plugin's subject, greeting, introduction, product question, review link text, and closing in Zen Cart admin.
 - Provides HTML and plain-text email content.
 - Previews a reminder using any real order without sending or recording it.
@@ -41,7 +42,7 @@ The subject, greeting, introduction, and closing accept `{customer_name}`, `{sto
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.3 through **Modules > Plugin Manager**.
+6. Install version 2.0.4 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -54,6 +55,10 @@ Open **Tools > Products Review Reminder**. In **Inspect an email**, enter any re
 - **Send test to store owner** sends the rendered message to `STORE_OWNER_EMAIL_ADDRESS`. In Zen Cart admin, this is **Configuration > Email Options > Email Address (sent FROM)**.
 
 Preview and test actions do not contact the customer, add a reminder-log record, or provide a working opt-out link. They use the order's customer name and products so the result matches a real reminder closely.
+
+## Sending batches
+
+**Maximum reminders per batch** controls how many eligible orders appear and can be sent during one submission. The default is 10. After a successful batch, refresh **Tools > Products Review Reminder** to load the next eligible orders. This prevents a high-volume shop from attempting hundreds of messages in one browser request.
 
 ## Uninstall
 
