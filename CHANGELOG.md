@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.7
+
+- Send store-owner test messages through Zen Cart's admin-copy email path.
+- Make test sends honor the configured admin HTML email format instead of looking for a customer preference belonging to the store-owner address.
+- Keep real reminders tied to the actual recipient customer's saved email preference.
+- Added an HTML or Plain text switch to the store-owner test-send controls.
+
 ## 2.0.6
 
 - Added modern array-based storefront language files for the review and opt-out pages.
