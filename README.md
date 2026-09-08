@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.13 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.14 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 This plugin is intentionally administrator-driven. It does not schedule, queue, or send review reminders in the background.
 
@@ -17,6 +17,7 @@ This plugin is intentionally administrator-driven. It does not schedule, queue, 
 - Sends an optional live opt-out test to the store owner using a selected customer's signed link.
 - Checks that customer's opt-out status and restores the customer after testing.
 - Includes secure review links and a signed one-click opt-out link.
+- Protects review and reminder-preference changes with the customer's Zen Cart session security token.
 - Installs through Zen Cart Plugin Manager without core-file changes.
 
 ## Compatibility
@@ -48,7 +49,7 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.13 through **Modules > Plugin Manager**.
+6. Install version 2.0.14 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.13"
+version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.14"
 
 test -f "$version_root/manifest.php"
 test -f "$version_root/Installer/ScriptedInstaller.php"
@@ -18,6 +18,19 @@ grep -q "value=\"live_optout_test\"" "$version_root/admin/addon_review_reminder.
 grep -q "value=\"check_optout\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"restore_optin\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "if (\$selected_order_id > 0)" "$version_root/admin/addon_review_reminder.php"
+grep -Fq '"security_token":' "$version_root/catalog/includes/modules/pages/addon_my_reviews/jscript_main.php"
+grep -Fq "hash_equals((string)\$_SESSION['securityToken'], \$securityToken)" "$version_root/catalog/addon_my_reviews.php"
+grep -Fq "include \"includes/application_top.php\"" "$version_root/catalog/addon_my_reviews.php"
+
+for guarded_file in \
+    "$version_root/catalog/includes/extra_datafiles/addon_my_reviews.php" \
+    "$version_root/catalog/includes/classes/observers/auto.products_review_reminder_template_loader.php" \
+    "$version_root/catalog/includes/modules/pages/addon_reviews_reminder_optout/header_php.php" \
+    "$version_root/catalog/includes/modules/pages/addon_my_reviews/jscript_main.php" \
+    "$version_root/catalog/includes/modules/pages/addon_my_reviews/header_php.php"
+do
+    grep -Fq "defined('IS_ADMIN_FLAG')" "$guarded_file"
+done
 
 if command -v php >/dev/null 2>&1; then
     find "$root/files" -type f -name '*.php' -print0 | xargs -0 -n1 php -l

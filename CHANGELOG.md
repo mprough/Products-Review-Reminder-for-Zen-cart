@@ -1,5 +1,11 @@
 # Change history
 
+## 2.0.14
+
+- Added direct-access guards to internal storefront data, observer, page-loader, and PHP-generated JavaScript files.
+- Added a session security token to review and reminder-preference AJAX mutations.
+- Restricted the AJAX endpoint to valid POST requests with JSON data and a matching session token.
+
 ## 2.0.13
 
 - Added a live opt-out test that sends the store owner a signed link for the customer attached to the selected order.
