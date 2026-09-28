@@ -370,7 +370,7 @@
 								<td class="dataTableHeadingContent" align="center"><input type="checkbox" id="checkAll" onchange="$('input:checkbox').prop('checked', this.checked);" checked="checked" /></td>
 								<td class="dataTableHeadingContent"><?php echo TBL_ORDER_ID; ?></td>
 								<td class="dataTableHeadingContent"><?php echo TBL_ORDER_DATE; ?></td>
-								<td class="dataTableHeadingContent"><?php echo $rec->fields['status']; ?></td>
+								<td class="dataTableHeadingContent"><?php echo htmlspecialchars((string)$rec->fields['status'], ENT_QUOTES, CHARSET); ?></td>
 								<td class="dataTableHeadingContent"><?php echo TBL_CUSTOMER_NAME; ?></td>
 								<td class="dataTableHeadingContent"><?php echo TBL_COMPANY_NAME; ?></td>
 								<td class="dataTableHeadingContent"><?php echo TBL_PRODUCT_COUNT; ?></td>
@@ -401,8 +401,8 @@
 								<td class="dataTableContent" valign="top"><?php echo $rec->fields['oid']; ?></td>
 								<td class="dataTableContent" valign="top"><?php echo $rec->fields['date']; ?></td>
 								<td class="dataTableContent" valign="top"><?php echo date("m/d/y", strtotime($rec->fields['date_added'])); ?></td>
-								<td class="dataTableContent" valign="top"><?php echo $rec->fields['customer']; ?></td>
-								<td class="dataTableContent" valign="top"><?php echo $rec->fields['company']; ?></td>
+								<td class="dataTableContent" valign="top"><?php echo htmlspecialchars((string)$rec->fields['customer'], ENT_QUOTES, CHARSET); ?></td>
+								<td class="dataTableContent" valign="top"><?php echo htmlspecialchars((string)$rec->fields['company'], ENT_QUOTES, CHARSET); ?></td>
 								<td class="dataTableContent" valign="top"><?php echo count( $products_pending_review_ar ); ?></td>
 								<td class="dataTableContent" valign="top" align="center" onclick="document.location.href='?oid=<?php echo $rec->fields['oid']; ?>';" style="cursor:pointer;"><?php echo ( $selected_order_id == $rec->fields['oid'] ? zen_image(DIR_WS_IMAGES . 'icon_arrow_right.gif', '') : zen_image(DIR_WS_IMAGES . 'icon_info.gif', IMAGE_ICON_INFO)); ?></td>
 							</tr>
@@ -542,7 +542,7 @@
 			#OUTPUT
 			$packing_list .= '
 							<tr class="dataTableRow ' . $row_class . '">
-								<td>' . $rec->fields['products_name'] . $option . $manufacturer . '</td>
+								<td>' . htmlspecialchars((string)$rec->fields['products_name'] . $option . $manufacturer, ENT_QUOTES, CHARSET) . '</td>
 								<td align="center">' . $reviews . '</td>
 							</tr>' . "\n";
 
