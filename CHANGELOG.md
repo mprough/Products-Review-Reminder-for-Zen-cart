@@ -1,5 +1,10 @@
 # Change history
 
+## 2.0.19
+
+- Added a stable shop root CLI entry point that dispatches to the installed plugin version. The cron command no longer changes on upgrade.
+- Show the stable entry point in admin and provide a missing file warning when it has not been copied.
+
 ## 2.0.18
 
 - Use a hosting friendly five minute cron schedule and an eleven minute worker heartbeat window.

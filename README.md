@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.18 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.19 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 Sending starts only when an administrator chooses a manual batch or starts a scheduled run. Scheduled runs require a server cron task.
 
@@ -29,7 +29,7 @@ Sending starts only when an administrator chooses a manual batch or starts a sch
 ## Installation
 
 1. Back up the shop files and database.
-2. If using the production ZIP, copy its `zc_plugins` directory into the shop root. If using the GitHub source, copy the contents of its `files` directory into the shop root.
+2. If using the production ZIP, copy its `zc_plugins` directory and `products_review_reminder_worker.php` into the shop root. If using the GitHub source, copy the contents of its `files` directory into the shop root.
 3. In Zen Cart admin, open **Modules > Plugin Manager**.
 4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
@@ -51,7 +51,7 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.18 through **Modules > Plugin Manager**.
+6. Install version 2.0.19 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -84,11 +84,11 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 
 ## Scheduled sending
 
-Open **Tools > Products Review Reminder** to copy the command generated for the installed shop, or send it to the hosting helpdesk. Set the cron schedule to `*/5 * * * *` (every five minutes). The command includes the shop's catalog URL and the absolute path to this version's worker.
+Open **Tools > Products Review Reminder** to copy the command generated for the installed shop, or send it to the hosting helpdesk. Set the cron schedule to `*/5 * * * *` (every five minutes). The command includes the shop's catalog URL and the stable worker path in the shop root. Copy `products_review_reminder_worker.php` from the package's `files` directory into the shop root along with `zc_plugins`. The cron command stays the same across plugin upgrades.
 
 Use the server's PHP CLI path if `php` is unavailable in cron. The worker refuses HTTP requests. Cron runs every five minutes and sends one batch of up to 10 per invocation. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows the latest worker heartbeat and sent, pending, skipped, and failed counts. Start is enabled only when the worker has checked in within eleven minutes. If the heartbeat stops, inspect the cron task and server logs. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
 
-Upgrading from 2.0.15 migrates the queue table in place. An active run is paused for delivery review during upgrade. The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the cron task before uninstalling the plugin.
+Upgrading from 2.0.15 migrates the queue table in place. An active run is paused for delivery review during upgrade. The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the cron task and the shop root `products_review_reminder_worker.php` file when uninstalling the plugin.
 
 ## Uninstall
 
@@ -116,7 +116,7 @@ The actual table names include the shop's configured database prefix. Remove the
 
 - [Added features](docs/ADDED_FEATURES.md)
 - [Work completed on September 4, 2026](docs/WORK_COMPLETED_2026-09-04.md)
-- [2.0.18 release review](docs/RELEASE_2.0.18.md)
+- [2.0.19 release review](docs/RELEASE_2.0.19.md)
 - [Change history](CHANGELOG.md)
 - [Security policy](SECURITY.md)
 - [License](LICENSE)

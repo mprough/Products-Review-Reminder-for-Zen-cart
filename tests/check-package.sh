@@ -2,8 +2,9 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.18"
+version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.19"
 
+test -f "$root/files/products_review_reminder_worker.php"
 test -f "$version_root/manifest.php"
 test -f "$version_root/Installer/ScriptedInstaller.php"
 test -f "$version_root/admin/addon_review_reminder.php"
@@ -19,6 +20,7 @@ test -f "$version_root/catalog/includes/languages/english/lang.addon_reviews_rem
 test -f "$version_root/catalog/includes/classes/observers/auto.products_review_reminder_template_loader.php"
 
 grep -Fq "Set up the cron task" "$version_root/admin/addon_review_reminder.php"
+grep -Fq 'products_review_reminder_worker.php' "$version_root/admin/addon_review_reminder.php"
 grep -Fq 'escapeshellarg($worker_path)' "$version_root/admin/addon_review_reminder.php"
 grep -Fq 'Schedule: <code>*/5 * * * *</code>' "$version_root/admin/addon_review_reminder.php"
 grep -Fq "heartbeat_age'] > 660" "$version_root/catalog/includes/functions/products_review_reminder_queue.php"
@@ -43,6 +45,13 @@ done
 
 if command -v php >/dev/null 2>&1; then
     find "$root/files" -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+    fixture="$(mktemp -d)"
+    trap 'rm -rf "$fixture"' EXIT
+    mkdir -p "$fixture/includes" "$fixture/zc_plugins/ProductsReviewReminder/v2.0.19/catalog"
+    cp "$root/files/products_review_reminder_worker.php" "$fixture/"
+    printf "<?php define('PLUGIN_PRODUCTS_REVIEW_REMINDER_VERSION', '2.0.19');\n" > "$fixture/includes/application_top.php"
+    printf '<?php echo "correct worker";\n' > "$fixture/zc_plugins/ProductsReviewReminder/v2.0.19/catalog/reminder_worker.php"
+    test "$(php "$fixture/products_review_reminder_worker.php")" = 'correct worker'
 else
     echo 'PHP is unavailable; PHP lint was not run locally.' >&2
 fi
