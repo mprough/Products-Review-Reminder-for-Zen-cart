@@ -1,5 +1,10 @@
 # Change history
 
+## 2.0.20
+
+- Accept an authenticated HTTPS GET request from an external cron service as an alternative to hosting PHP CLI.
+- Generate and preserve a private worker access key, show both schedule options in admin, and reject invalid HTTP requests.
+
 ## 2.0.19
 
 - Added a stable shop root CLI entry point that dispatches to the installed plugin version. The cron command no longer changes on upgrade.
