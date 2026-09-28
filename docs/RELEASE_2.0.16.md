@@ -5,6 +5,7 @@ September 28, 2026
 ## Changes prepared today
 
 - Added an administrator-started queue with a PHP CLI worker. Each run snapshots eligible orders and sends at most ten messages every five minutes until its queue is empty.
+- Displayed the shop-specific cron schedule and command in the admin page for the owner or hosting helpdesk.
 - Added persistent progress, Stop, and a worker heartbeat. Start requires a heartbeat within three minutes, so an absent cron task cannot silently strand a new run.
 - Paused uncertain sends rather than retrying automatically. Manual sends are blocked during running and paused queues.
 - Corrected the worker's catalog paths and email template registration, so scheduled messages use the same template as manual messages.

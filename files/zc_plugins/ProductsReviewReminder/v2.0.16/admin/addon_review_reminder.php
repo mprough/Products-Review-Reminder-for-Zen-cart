@@ -113,6 +113,10 @@
 	}
 	$queue_job = prr_queue_job();
 	$worker_healthy = $queue_job && $queue_job['heartbeat_age'] !== null && (int)$queue_job['heartbeat_age'] >= 0 && (int)$queue_job['heartbeat_age'] <= 180;
+	$worker_path = realpath(dirname(__DIR__) . '/catalog/reminder_worker.php');
+	$catalog_server = defined('HTTPS_CATALOG_SERVER') && HTTPS_CATALOG_SERVER !== '' ? HTTPS_CATALOG_SERVER : HTTP_CATALOG_SERVER;
+	$store_url = rtrim($catalog_server, '/') . '/' . ltrim(DIR_WS_CATALOG, '/');
+	$cron_command = $worker_path === false ? '' : 'PRR_STORE_URL=' . escapeshellarg($store_url) . ' php ' . escapeshellarg($worker_path);
 	$queue_counts = ['pending' => 0, 'sent' => 0, 'skipped' => 0, 'failed' => 0, 'processing' => 0];
 	if ($queue_job) {
 		$counts = $db->Execute('SELECT state, COUNT(*) AS total FROM ' . DB_PREFIX . 'addon_review_reminder_queue WHERE run_id = ' . (int)$queue_job['run_id'] . ' GROUP BY state');
@@ -358,7 +362,12 @@
 			<div class="inspectionBox">
 				<h2>Continue sending in batches</h2>
 				<p>Start queues all currently eligible orders. A server cron task sends up to 10 reminders every 5 minutes. This continues after you close the page.</p>
+				<h3>Set up the cron task</h3>
+				<p>In your hosting control panel, add a cron task that runs every minute. Copy the command below, or send it to your hosting helpdesk. If your host uses a different PHP CLI command, ask them to replace <code>php</code> with its full path.</p>
+				<p>Schedule: <code>* * * * *</code> (every minute)</p>
+				<?php if ($cron_command !== '') { ?><pre style="white-space:pre-wrap;overflow-wrap:anywhere;user-select:all;"><?php echo htmlspecialchars($cron_command, ENT_QUOTES, CHARSET); ?></pre><?php } else { ?><p class="inspectionError">The worker file path could not be determined. Ask your hosting helpdesk to locate the plugin's catalog/reminder_worker.php file.</p><?php } ?>
 				<p class="<?php echo $worker_healthy ? 'inspectionFeedback' : 'inspectionError'; ?>">Worker heartbeat: <?php echo $worker_healthy ? 'active' : 'missing or over 3 minutes old'; ?><?php if ($queue_job && $queue_job['last_heartbeat_at']) { ?>. Last check: <?php echo htmlspecialchars((string)$queue_job['last_heartbeat_at'], ENT_QUOTES, CHARSET); ?> server time<?php } ?>.</p>
+				<?php if (!$worker_healthy) { ?><p class="inspectionError">Scheduled sending is unavailable until the cron task checks in. You can still use Send selected below to send a manual batch whenever you choose. No cron task is needed for manual sending.</p><?php } ?>
 				<?php if ($queue_job) { ?>
 				<p>Status: <?php echo htmlspecialchars((string)$queue_job['state'], ENT_QUOTES, CHARSET); ?>.
 				Sent: <?php echo (int)$queue_counts['sent']; ?>. Pending: <?php echo (int)$queue_counts['pending']; ?>.
@@ -374,7 +383,7 @@
 				<?php echo zen_draw_form('stopReminderQueue', FILENAME_ADDON_REVIEW_REMINDER, '', 'post'); ?>
 				<?php echo zen_draw_hidden_field('action', 'stop_queue'); ?>
 				<button type="submit" class="btn btn-warning">Stop sending</button></form>
-				<?php } elseif ($queue_job && $queue_job['state'] === 'paused') { ?><p>The run is paused for review. Check the email error log and confirm delivery before sending again.</p><?php } else { ?><p>Start is available after the worker checks in.</p><?php } ?>
+				<?php } elseif ($queue_job && $queue_job['state'] === 'paused') { ?><p>The run is paused for review. Check the email error log and confirm delivery before sending again.</p><?php } else { ?><p>Start becomes available after the worker checks in. Manual sending remains available below.</p><?php } ?>
 			</div>
 			<table border="0" width="100%" cellspacing="0" cellpadding="0">
 				<tr>

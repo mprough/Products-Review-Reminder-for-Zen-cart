@@ -18,6 +18,8 @@ test -f "$version_root/catalog/includes/languages/english/lang.addon_my_reviews.
 test -f "$version_root/catalog/includes/languages/english/lang.addon_reviews_reminder_optout.php"
 test -f "$version_root/catalog/includes/classes/observers/auto.products_review_reminder_template_loader.php"
 
+grep -Fq "Set up the cron task" "$version_root/admin/addon_review_reminder.php"
+grep -Fq 'escapeshellarg($worker_path)' "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"live_optout_test\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"check_optout\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"restore_optin\"" "$version_root/admin/addon_review_reminder.php"

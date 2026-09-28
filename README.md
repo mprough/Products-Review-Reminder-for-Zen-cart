@@ -34,7 +34,7 @@ Sending starts only when an administrator chooses a manual batch or starts a sch
 4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
 6. Open **Tools > Products Review Reminder** to review eligible orders and send selected reminders.
-7. To use Start sending, configure the server cron task described below. The manual button works without cron.
+7. To use Start sending, configure the server cron task described below. The manual button works without cron. If the worker heartbeat is missing, the admin page shows a notice explaining that scheduled sending is unavailable while manual sending remains available.
 
 The email fields affect only review reminders sent by this plugin. They do not alter Zen Cart's other email templates.
 
@@ -84,7 +84,7 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 
 ## Scheduled sending
 
-Set a cron task to invoke the PHP CLI worker every minute. For the Homesteader Supply installation, the command is:
+Open **Tools > Products Review Reminder** to see and copy the cron schedule and command for the installed shop. The shop owner can give that command to the hosting helpdesk. Set a cron task to invoke the PHP CLI worker every minute. For the Homesteader Supply installation, the command is:
 
 ```sh
 PRR_STORE_URL=https://www.homesteadersupply.com php /home/home4new/public_html/zc_plugins/ProductsReviewReminder/v2.0.16/catalog/reminder_worker.php
