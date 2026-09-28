@@ -28,7 +28,7 @@ September 28, 2026
 
 ## Verification status
 
-- Package structure and PHP lint must pass before release. The 2.0.22 code has not yet completed the GitHub Actions matrix.
+- The package structure check, stable worker tests, and PHP lint passed in GitHub Actions on PHP 8.0 through 8.5 for the 2.0.22 review branch.
 - A shop installation must confirm the stable cron path, heartbeat, scheduled sends, and upgrade behavior before publishing to the Zen Cart plugin catalog.
 
 ## Install and acceptance review
