@@ -1,5 +1,10 @@
 # Change history
 
+## 2.0.18
+
+- Use a hosting friendly five minute cron schedule and an eleven minute worker heartbeat window.
+- Anchor the next batch time to the start of the previous batch so the next cron tick is not skipped.
+
 ## 2.0.17
 
 - Display the installed shop's cron schedule and command in admin for the owner or hosting helpdesk.

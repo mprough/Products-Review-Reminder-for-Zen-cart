@@ -2,7 +2,7 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.17"
+version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.18"
 
 test -f "$version_root/manifest.php"
 test -f "$version_root/Installer/ScriptedInstaller.php"
@@ -20,6 +20,9 @@ test -f "$version_root/catalog/includes/classes/observers/auto.products_review_r
 
 grep -Fq "Set up the cron task" "$version_root/admin/addon_review_reminder.php"
 grep -Fq 'escapeshellarg($worker_path)' "$version_root/admin/addon_review_reminder.php"
+grep -Fq 'Schedule: <code>*/5 * * * *</code>' "$version_root/admin/addon_review_reminder.php"
+grep -Fq "heartbeat_age'] > 660" "$version_root/catalog/includes/functions/products_review_reminder_queue.php"
+grep -Fq 'zen_db_input($batchStarted)' "$version_root/catalog/reminder_worker.php"
 grep -q "value=\"live_optout_test\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"check_optout\"" "$version_root/admin/addon_review_reminder.php"
 grep -q "value=\"restore_optin\"" "$version_root/admin/addon_review_reminder.php"
