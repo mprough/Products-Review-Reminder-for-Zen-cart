@@ -1,5 +1,15 @@
 # Change history
 
+## 2.0.16
+
+- Added a worker heartbeat. Start is available only after the cron worker has checked in within three minutes.
+- Repaired the catalog CLI worker's image and template paths, and registered the plugin email template for catalog mail.
+- Migrated existing queue tables on upgrade and paused an active run for delivery review.
+- Rechecked order eligibility before each queued send, including status, timing, previous sends, opt-outs, and remaining unreviewed products.
+- Filtered reviewed items before applying the per-email product limit.
+- Escaped customer and product text on the review page and validated review requests.
+- Added manual-send result counts and prevented manual sends while a scheduled run is paused.
+
 ## 2.0.15
 
 - Added administrator-started scheduled sending, with up to 10 reminders every 5 minutes using a PHP CLI cron task.

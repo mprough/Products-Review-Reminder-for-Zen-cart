@@ -1,6 +1,6 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.15 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.16 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 Sending starts only when an administrator chooses a manual batch or starts a scheduled run. Scheduled runs require a server cron task.
 
@@ -51,7 +51,7 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.15 through **Modules > Plugin Manager**.
+6. Install version 2.0.16 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -87,12 +87,12 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 Set a cron task to invoke the PHP CLI worker every minute. For the Homesteader Supply installation, the command is:
 
 ```sh
-PRR_STORE_URL=https://www.homesteadersupply.com php /home/home4new/public_html/zc_plugins/ProductsReviewReminder/v2.0.15/catalog/reminder_worker.php
+PRR_STORE_URL=https://www.homesteadersupply.com php /home/home4new/public_html/zc_plugins/ProductsReviewReminder/v2.0.16/catalog/reminder_worker.php
 ```
 
-Use the server's PHP CLI path if `php` is unavailable in cron. The worker refuses HTTP requests. Cron must run once per minute, but the stored due time limits sending to one batch of up to 10 every 5 minutes. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows sent, pending, skipped, and failed counts. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
+Use the server's PHP CLI path if `php` is unavailable in cron. The worker refuses HTTP requests. Cron must run once per minute, but the stored due time limits sending to one batch of up to 10 every 5 minutes. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows the latest worker heartbeat and sent, pending, skipped, and failed counts. Start is enabled only when the worker has checked in within three minutes. If the heartbeat stops, inspect the cron task and server logs. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
 
-The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the cron task before uninstalling the plugin.
+Upgrading from 2.0.15 migrates the queue table in place. An active run is paused for delivery review during upgrade. The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the cron task before uninstalling the plugin.
 
 ## Uninstall
 
@@ -120,6 +120,7 @@ The actual table names include the shop's configured database prefix. Remove the
 
 - [Added features](docs/ADDED_FEATURES.md)
 - [Work completed on September 4, 2026](docs/WORK_COMPLETED_2026-09-04.md)
+- [2.0.16 release review](docs/RELEASE_2.0.16.md)
 - [Change history](CHANGELOG.md)
 - [Security policy](SECURITY.md)
 - [License](LICENSE)

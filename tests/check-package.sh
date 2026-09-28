@@ -2,7 +2,7 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.15"
+version_root="$root/files/zc_plugins/ProductsReviewReminder/v2.0.16"
 
 test -f "$version_root/manifest.php"
 test -f "$version_root/Installer/ScriptedInstaller.php"
@@ -10,6 +10,7 @@ test -f "$version_root/admin/addon_review_reminder.php"
 test -f "$version_root/admin/includes/classes/observers/auto.products_review_reminder_test_email.php"
 test -f "$version_root/catalog/addon_my_reviews.php"
 test -f "$version_root/catalog/reminder_worker.php"
+test -f "$version_root/catalog/includes/classes/observers/auto.products_review_reminder_test_email.php"
 test -f "$version_root/catalog/includes/functions/products_review_reminder_queue.php"
 test -f "$version_root/catalog/includes/functions/products_review_reminder_mail.php"
 test -f "$version_root/catalog/email/email_template_addon_review_reminder.html"

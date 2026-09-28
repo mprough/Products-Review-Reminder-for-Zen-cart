@@ -4,10 +4,9 @@
  * @copyright Copyright 2003-2017 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: addon_my_reviews.php 2024/27/08 PRO-Webs.net v.1.2 $
+ * @version $Id: addon_my_reviews.php 2017-07-12 08:00 v.1.0 $
  * @author Will Vasconcelos willvasconcelos@outlook.com $
  */
 
-if (!defined('FILENAME_ADDON_REVIEW_REMINDER')) {
-    define('FILENAME_ADDON_REVIEW_REMINDER', 'addon_review_reminder');
-}
+const BOX_CONFIGURATION_REVIEW_REMINDER = 'Products Review Reminder';
+const BOX_TOOLS_REVIEW_REMINDER = 'Products Review Reminder';
