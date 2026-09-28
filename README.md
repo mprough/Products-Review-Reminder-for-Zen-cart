@@ -1,15 +1,16 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and manually send customers a request for honest product feedback. Version 2.0.14 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.15 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
-This plugin is intentionally administrator-driven. It does not schedule, queue, or send review reminders in the background.
+Sending starts only when an administrator chooses a manual batch or starts a scheduled run. Scheduled runs require a server cron task.
 
 ## Features
 
 - Lists orders after a configurable order status and waiting period.
 - Excludes orders already contacted and customers who opted out.
-- Sends reminders only when the administrator explicitly selects orders and submits the form.
-- Limits each displayed and submitted batch to a configurable number of reminders, 10 by default.
+- Sends selected orders with the manual button, or continues a scheduled run only after an administrator clicks Start sending.
+- Can queue the currently eligible orders after an administrator clicks Start sending, then send up to 10 every 5 minutes until the queue is empty.
+- Limits each displayed and manually submitted batch to a configurable number of reminders, 10 by default.
 - Lets the shop owner edit this plugin's subject, greeting, introduction, product question, review link text, and closing in Zen Cart admin.
 - Provides HTML and plain-text email content.
 - Previews a reminder using any real order without sending or recording it.
@@ -33,6 +34,7 @@ This plugin is intentionally administrator-driven. It does not schedule, queue, 
 4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
 6. Open **Tools > Products Review Reminder** to review eligible orders and send selected reminders.
+7. To use Start sending, configure the server cron task described below. The manual button works without cron.
 
 The email fields affect only review reminders sent by this plugin. They do not alter Zen Cart's other email templates.
 
@@ -49,7 +51,7 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
 5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.14 through **Modules > Plugin Manager**.
+6. Install version 2.0.15 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -78,7 +80,19 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 
 ## Sending batches
 
-**Maximum reminders per batch** controls how many eligible orders appear and can be sent during one submission. The default is 10. After a successful batch, refresh **Tools > Products Review Reminder** to load the next eligible orders. This prevents a high-volume shop from attempting hundreds of messages in one browser request.
+**Maximum reminders per batch** controls how many eligible orders appear and can be sent during one manual submission. The default is 10. After a successful manual batch, the next eligible orders appear. The scheduled run sends at most 10 per interval.
+
+## Scheduled sending
+
+Set a cron task to invoke the PHP CLI worker every minute. For the Homesteader Supply installation, the command is:
+
+```sh
+PRR_STORE_URL=https://www.homesteadersupply.com php /home/home4new/public_html/zc_plugins/ProductsReviewReminder/v2.0.15/catalog/reminder_worker.php
+```
+
+Use the server's PHP CLI path if `php` is unavailable in cron. The worker refuses HTTP requests. Cron must run once per minute, but the stored due time limits sending to one batch of up to 10 every 5 minutes. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows sent, pending, skipped, and failed counts. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
+
+The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the cron task before uninstalling the plugin.
 
 ## Uninstall
 
@@ -90,6 +104,8 @@ The retained tables are:
 | --- | --- | --- |
 | `addon_review_reminder_log` | Records orders successfully sent a reminder | No |
 | `addon_review_reminder_optout` | Records customers who declined future reminders | No |
+| `addon_review_reminder_job` | Holds the current scheduled run | Yes |
+| `addon_review_reminder_queue` | Holds queued orders and progress | Yes |
 
 The actual table names include the shop's configured database prefix. Remove these tables manually only when their history is no longer needed.
 

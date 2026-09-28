@@ -1,5 +1,12 @@
 # Change history
 
+## 2.0.15
+
+- Added administrator-started scheduled sending, with up to 10 reminders every 5 minutes using a PHP CLI cron task.
+- Added persistent queue progress, Stop, and fail-safe pauses for interrupted or failed sends.
+- Escaped customer and product details in the admin list and guarded duplicate plugin constants.
+- Retained manual one-batch sending and existing reminder history.
+
 ## 2.0.14
 
 - Added direct-access guards to internal storefront data, observer, page-loader, and PHP-generated JavaScript files.
