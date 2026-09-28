@@ -1,5 +1,10 @@
 # Change history
 
+## 2.0.17
+
+- Display the installed shop's cron schedule and command in admin for the owner or hosting helpdesk.
+- Explain clearly that manual Send selected works when cron is absent.
+
 ## 2.0.16
 
 - Added a worker heartbeat. Start is available only after the cron worker has checked in within three minutes.
