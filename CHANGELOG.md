@@ -18,7 +18,6 @@
 ## 2.0.16
 
 - Added a worker heartbeat. Start is available only after the cron worker has checked in within three minutes.
-- Show the shop-specific cron schedule and command in Tools so the owner can copy it or send it to hosting support. A missing heartbeat notice explains that manual sending remains available.
 - Repaired the catalog CLI worker's image and template paths, and registered the plugin email template for catalog mail.
 - Migrated existing queue tables on upgrade and paused an active run for delivery review.
 - Rechecked order eligibility before each queued send, including status, timing, previous sends, opt-outs, and remaining unreviewed products.

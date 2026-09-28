@@ -2,24 +2,41 @@
 
 September 28, 2026
 
-## Changes prepared today
+## Summary of today's plugin changes
 
-- Added a stable shop root worker so upgrading the plugin does not require editing the hosting cron entry.
+### Sending and queue behavior
 
-- Added an administrator-started queue with a PHP CLI worker. Each run snapshots eligible orders and sends at most ten messages every five minutes until its queue is empty.
-- Displayed the shop-specific cron schedule and command in the admin page for the owner or hosting helpdesk.
-- Added persistent progress, Stop, and a worker heartbeat. Start requires a heartbeat within three minutes, so an absent cron task cannot silently strand a new run.
-- Paused uncertain sends rather than retrying automatically. Manual sends are blocked during running and paused queues.
-- Corrected the worker's catalog paths and email template registration, so scheduled messages use the same template as manual messages.
-- Rechecked order status, waiting window, opt-out, send history, and unreviewed products before each queued send. Applied the product limit after filtering previously reviewed products.
-- Validated review submissions and escaped customer and product text in the storefront review page and admin results.
-- Added manual batch result counts and retained previous reminder history and opt-outs.
-- Made 2.0.19 a separate Plugin Manager version. Its installer migrates existing 2.0.15 queue tables and pauses an active run for delivery review.
+- Added an administrator-started queue. Start snapshots currently eligible orders, and a PHP CLI worker sends at most ten reminders per run on a five minute cron schedule. Later eligible orders require another Start.
+- When the queue is empty, the run becomes complete and stops. With an active heartbeat, the shop owner can click Start again to build a new list of orders eligible at that time. The prior run does not restart automatically.
+- Added persistent sent, pending, skipped, and failed counts, a Stop control, and a heartbeat. Start is unavailable when the worker has not checked in within eleven minutes. Manual Send selected remains available without cron.
+- Paused the queue on failed or uncertain delivery. A previously attempted email is never retried automatically; manual sends are blocked while a queue is running or paused.
+- Rechecked current order status, date window, prior reminder history, customer opt-out, and remaining unreviewed products immediately before each queued send.
+- Applied the maximum products setting after filtering previously reviewed products, so an already reviewed item cannot consume the limit.
+- Set the next due time from the start of a batch. This lets the next five minute cron tick run the following batch even when the prior batch took time to send.
 
-## Release checks
+### Installation and administration
 
-The package structure check and whitespace check pass locally. PHP is unavailable in this workspace; GitHub Actions checks PHP syntax on 8.0 through 8.5. Email delivery, cron scheduling, and upgrade behavior require a Zen Cart staging shop before publishing to the Zen Cart catalog.
+- Added the cron schedule and a shop-specific, copyable command to Tools > Products Review Reminder. The page explains the missing heartbeat and the manual sending option.
+- Added `products_review_reminder_worker.php` to the shop root. This stable CLI entry file loads the version installed through Plugin Manager. The host changes the cron path once when upgrading to 2.0.19, then keeps that path for later versions.
+- Added an in-place migration for earlier queue tables. An active run using the original queue schema is paused on upgrade for delivery review. The installer preserves reminder history, customer opt-outs, and existing message settings.
+- Added a manual batch result message showing messages accepted by the mail service and orders skipped or failed.
 
-## Installation review
+### Email and review page repairs
 
-Install through Modules > Plugin Manager, copy the stable worker to the shop root and set a five minute CLI cron task using the command shown in admin, then verify that Tools > Products Review Reminder shows an active worker heartbeat. Start sending queues currently eligible orders. If the heartbeat stops, check cron and server logs. Inspect a paused run before any further send to avoid duplicates.
+- Corrected catalog worker image and template paths and registered the plugin email template for scheduled mail.
+- Escaped customer and product text in admin, email image attributes, and the storefront review page. Validated review request types, product ID, rating, and text length before writing a review.
+
+## Verification status
+
+- The ZIP passed its archive and package structure checks. GitHub Actions passed PHP lint and stable worker version selection on PHP 8.0 through 8.5.
+- A shop installation must confirm the stable cron path, heartbeat, scheduled sends, and upgrade behavior before publishing to the Zen Cart plugin catalog.
+
+## Install and acceptance review
+
+1. Copy both the ZIP's `zc_plugins` directory and `products_review_reminder_worker.php` into the shop root. Install 2.0.19 through Modules > Plugin Manager.
+2. Replace the old versioned cron command with the new shop root command displayed in Tools > Products Review Reminder. Keep the `*/5 * * * *` schedule.
+3. After the next cron tick, confirm the heartbeat becomes active. Do not click Start until the command and heartbeat are correct.
+4. In a staging shop, test one controlled queued batch and the following five minute batch. Confirm sent counts and reminder log entries, plus the email content and opt-out link.
+5. Verify Stop, a paused failure, manual sending without cron, and upgrading from the already installed version while preserving settings and send history.
+
+The draft pull request remains unmerged for review. No Zen Cart catalog submission has been made.
