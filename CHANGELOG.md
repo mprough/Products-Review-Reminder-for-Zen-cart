@@ -1,5 +1,15 @@
 # Change history
 
+## 2.0.22
+
+- Package the encapsulated manual plugin separately from the fully optional scheduled connector.
+- Label scheduling optional throughout the admin and installation instructions.
+
+## 2.0.21
+
+- Replaced the misleading PHP command in admin with a cPanel curl command that calls the authenticated HTTPS worker.
+- Retained the external cron URL and five minute schedule.
+
 ## 2.0.20
 
 - Accept an authenticated HTTPS GET request from an external cron service as an alternative to hosting PHP CLI.

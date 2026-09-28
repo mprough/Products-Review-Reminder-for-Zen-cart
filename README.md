@@ -1,8 +1,8 @@
 # Products Review Reminder for Zen Cart
 
-Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.20 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
+Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.22 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
-Sending starts only when an administrator chooses a manual batch or starts a scheduled run. Scheduled runs require a five minute request from an external cron service or a hosting cron task.
+Manual sending is the default and needs no cron task or shop root file. An optional connector enables scheduled sending after an administrator starts a run. It requires a request every five minutes from cPanel or an external cron service.
 
 ## Features
 
@@ -29,12 +29,12 @@ Sending starts only when an administrator chooses a manual batch or starts a sch
 ## Installation
 
 1. Back up the shop files and database.
-2. If using the production ZIP, copy its `zc_plugins` directory and `products_review_reminder_worker.php` into the shop root. If using the GitHub source, copy the contents of its `files` directory into the shop root.
+2. Copy the production ZIP's `zc_plugins` directory into the shop root. The optional scheduled connector is distributed separately and is not needed for manual sending.
 3. In Zen Cart admin, open **Modules > Plugin Manager**.
 4. Install the newest **Products Review Reminder** version.
 5. Open **Configuration > Products Review Reminder** to choose eligibility rules and edit the reminder wording.
 6. Open **Tools > Products Review Reminder** to review eligible orders and send selected reminders.
-7. To use Start sending, configure either scheduled option described below. The manual button works without cron. If the worker heartbeat is missing, the admin page shows a notice explaining that scheduled sending is unavailable while manual sending remains available.
+7. If you choose optional scheduled sending, install the separate connector and configure either scheduled option described below. The manual button works without cron. If the worker heartbeat is missing, the admin page shows a notice explaining that scheduled sending is unavailable while manual sending remains available.
 
 The email fields affect only review reminders sent by this plugin. They do not alter Zen Cart's other email templates.
 
@@ -50,8 +50,8 @@ Press Enter in any editable body-text field to create a line break in both HTML 
 2. Manually remove the old loose plugin files.
 3. Do not run the legacy `uninstall.sql`.
 4. Do not delete or empty the `addon_review_reminder_log` or `addon_review_reminder_optout` database tables.
-5. Copy the new `files` directory contents into the shop root.
-6. Install version 2.0.20 through **Modules > Plugin Manager**.
+5. Copy the production ZIP's `zc_plugins` directory into the shop root. Install the separate connector only if choosing scheduled sending.
+6. Install version 2.0.22 through **Modules > Plugin Manager**.
 7. Confirm the settings under **Configuration > Products Review Reminder** before sending a reminder.
 
 The installer reuses both existing database tables so previous send history and customer opt-outs remain effective. It recognizes the former configuration group, migrates supported waiting-period, date-window, and maximum-product settings, and replaces the legacy menu registrations. Existing MyISAM tables can remain MyISAM; new installations create the tables with InnoDB.
@@ -84,11 +84,11 @@ The test panel includes an HTML or Plain text format switch. It changes both the
 
 ## Scheduled sending
 
-Copy `products_review_reminder_worker.php` from the package's `files` directory into the shop root along with `zc_plugins`. Open **Tools > Products Review Reminder** to copy either the private HTTPS GET URL for an external cron service or the PHP CLI command for a hosting cron task. Schedule one option every five minutes (`*/5 * * * *`). Keep the HTTPS URL confidential because it contains the access key. The stable entry point stays the same across plugin upgrades.
+This feature is fully optional. Manual sending and the encapsulated plugin work without cron. For scheduled sending, copy `products_review_reminder_worker.php` from the separate optional connector ZIP into the shop root. Open **Tools > Products Review Reminder** to copy either the private HTTPS GET URL for an external cron service or the cPanel curl command that calls the same HTTPS URL. Schedule one option every five minutes (`*/5 * * * *`). Keep the HTTPS URL confidential because it contains the access key. The stable entry point stays the same across plugin upgrades.
 
-If using the hosting command, use the server's PHP CLI path if `php` is unavailable in cron. The worker accepts only requests with the installed access key. The scheduled request runs every five minutes and sends one batch of up to 10 per invocation. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows the latest worker heartbeat and sent, pending, skipped, and failed counts. Start is enabled only when the worker has checked in within eleven minutes. If the heartbeat stops, inspect the cron task and server logs. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
+The cPanel command uses `curl` to call the private HTTPS URL. Do not use the older `PRR_STORE_URL=... php ...` command. The worker accepts only requests with the installed access key. The scheduled request runs every five minutes and sends one batch of up to 10 per invocation. Starting a run queues only orders eligible at that moment. New orders require another Start after the current run finishes. Stop prevents further batches, although a batch already underway may finish. The page shows the latest worker heartbeat and sent, pending, skipped, and failed counts. Start is enabled only when the worker has checked in within eleven minutes. If the heartbeat stops, inspect the cron task and server logs. A send failure or interrupted send pauses the run for investigation, so an uncertain delivery is never retried automatically. The existing manual Send selected action remains available.
 
-Upgrading from 2.0.15 migrates the queue table in place. An active run is paused for delivery review during upgrade. The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. Remove the scheduled task and the shop root `products_review_reminder_worker.php` file when uninstalling the plugin.
+Upgrading from 2.0.15 migrates the queue table in place. An active run is paused for delivery review during upgrade. The queue tables hold run state. The existing reminder log and customer opt-out tables are preserved during upgrades. Uninstall removes the queue tables but preserves the reminder log and opt-outs. If scheduled sending was enabled, remove its cron task and the optional shop root `products_review_reminder_worker.php` file when uninstalling.
 
 ## Uninstall
 
@@ -116,7 +116,7 @@ The actual table names include the shop's configured database prefix. Remove the
 
 - [Added features](docs/ADDED_FEATURES.md)
 - [Work completed on September 4, 2026](docs/WORK_COMPLETED_2026-09-04.md)
-- [2.0.20 release review](docs/RELEASE_2.0.20.md)
+- [2.0.22 release review](docs/RELEASE_2.0.22.md)
 - [Change history](CHANGELOG.md)
 - [Security policy](SECURITY.md)
 - [License](LICENSE)
