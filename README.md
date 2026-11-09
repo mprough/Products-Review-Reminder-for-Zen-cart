@@ -1,5 +1,8 @@
 # Products Review Reminder for Zen Cart
 
+**Download the install ZIP:** [ProductsReviewReminder-v2.0.22.zip](https://raw.githubusercontent.com/mprough/Products-Review-Reminder-for-Zen-cart/main/dist/ProductsReviewReminder-v2.0.22.zip). Extract it on your computer and follow the installation instructions below.
+
+
 Products Review Reminder helps a shop owner find eligible completed orders and send customers a request for honest product feedback. Version 2.0.22 is maintained by Melanie Prough of [PRO-Webs, Inc.](https://pro-webs.net/).
 
 Manual sending is the default and needs no cron task or shop root file. An optional connector enables scheduled sending after an administrator starts a run. It requires a request every five minutes from cPanel or an external cron service.
