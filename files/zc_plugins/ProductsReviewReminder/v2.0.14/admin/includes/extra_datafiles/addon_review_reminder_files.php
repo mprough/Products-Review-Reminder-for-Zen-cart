@@ -8,4 +8,6 @@
  * @author Will Vasconcelos willvasconcelos@outlook.com $
  */
 
-const FILENAME_ADDON_REVIEW_REMINDER = 'addon_review_reminder';
+if (!defined('FILENAME_ADDON_REVIEW_REMINDER')) {
+    define('FILENAME_ADDON_REVIEW_REMINDER', 'addon_review_reminder');
+}

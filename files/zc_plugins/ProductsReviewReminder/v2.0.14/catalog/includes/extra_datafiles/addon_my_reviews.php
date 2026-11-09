@@ -13,9 +13,17 @@ if (!defined('IS_ADMIN_FLAG')) {
  */
 
 #FILE NAMES
-const FILENAME_ADDON_MY_REVIEWS = 'addon_my_reviews';
-const FILENAME_ADDON_REVIEWS_REMINDER_OPTOUT = 'addon_reviews_reminder_optout';
+if (!defined('FILENAME_ADDON_MY_REVIEWS')) {
+    define('FILENAME_ADDON_MY_REVIEWS', 'addon_my_reviews');
+}
+if (!defined('FILENAME_ADDON_REVIEWS_REMINDER_OPTOUT')) {
+    define('FILENAME_ADDON_REVIEWS_REMINDER_OPTOUT', 'addon_reviews_reminder_optout');
+}
 
 #TABLE NAMES
-const TABLE_ADDON_REVIEW_REMINDER_LOG = DB_PREFIX . 'addon_review_reminder_log';
-const TABLE_ADDON_REVIEW_REMINDER_OPTOUT = DB_PREFIX . 'addon_review_reminder_optout';
+if (!defined('TABLE_ADDON_REVIEW_REMINDER_LOG')) {
+    define('TABLE_ADDON_REVIEW_REMINDER_LOG', DB_PREFIX . 'addon_review_reminder_log');
+}
+if (!defined('TABLE_ADDON_REVIEW_REMINDER_OPTOUT')) {
+    define('TABLE_ADDON_REVIEW_REMINDER_OPTOUT', DB_PREFIX . 'addon_review_reminder_optout');
+}

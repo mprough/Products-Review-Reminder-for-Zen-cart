@@ -1,5 +1,52 @@
 # Change history
 
+## 2.0.22
+
+- Package the encapsulated manual plugin separately from the fully optional scheduled connector.
+- Label scheduling optional throughout the admin and installation instructions.
+
+## 2.0.21
+
+- Replaced the misleading PHP command in admin with a cPanel curl command that calls the authenticated HTTPS worker.
+- Retained the external cron URL and five minute schedule.
+
+## 2.0.20
+
+- Accept an authenticated HTTPS GET request from an external cron service as an alternative to hosting PHP CLI.
+- Generate and preserve a private worker access key, show both schedule options in admin, and reject invalid HTTP requests.
+
+## 2.0.19
+
+- Added a stable shop root CLI entry point that dispatches to the installed plugin version. The cron command no longer changes on upgrade.
+- Show the stable entry point in admin and provide a missing file warning when it has not been copied.
+
+## 2.0.18
+
+- Use a hosting friendly five minute cron schedule and an eleven minute worker heartbeat window.
+- Anchor the next batch time to the start of the previous batch so the next cron tick is not skipped.
+
+## 2.0.17
+
+- Display the installed shop's cron schedule and command in admin for the owner or hosting helpdesk.
+- Explain clearly that manual Send selected works when cron is absent.
+
+## 2.0.16
+
+- Added a worker heartbeat. Start is available only after the cron worker has checked in within three minutes.
+- Repaired the catalog CLI worker's image and template paths, and registered the plugin email template for catalog mail.
+- Migrated existing queue tables on upgrade and paused an active run for delivery review.
+- Rechecked order eligibility before each queued send, including status, timing, previous sends, opt-outs, and remaining unreviewed products.
+- Filtered reviewed items before applying the per-email product limit.
+- Escaped customer and product text on the review page and validated review requests.
+- Added manual-send result counts and prevented manual sends while a scheduled run is paused.
+
+## 2.0.15
+
+- Added administrator-started scheduled sending, with up to 10 reminders every 5 minutes using a PHP CLI cron task.
+- Added persistent queue progress, Stop, and fail-safe pauses for interrupted or failed sends.
+- Escaped customer and product details in the admin list and guarded duplicate plugin constants.
+- Retained manual one-batch sending and existing reminder history.
+
 ## 2.0.14
 
 - Added direct-access guards to internal storefront data, observer, page-loader, and PHP-generated JavaScript files.

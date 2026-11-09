@@ -8,6 +8,9 @@
  * @author: Will Davies Vasconcelos <willvasconcelos@outlook.com> $
  */
 
- const TABLE_ADDON_REVIEW_REMINDER_LOG = DB_PREFIX . 'addon_review_reminder_log';
-
- const TABLE_ADDON_REVIEW_REMINDER_OPTOUT = DB_PREFIX . 'addon_review_reminder_optout';
+if (!defined('TABLE_ADDON_REVIEW_REMINDER_LOG')) {
+    define('TABLE_ADDON_REVIEW_REMINDER_LOG', DB_PREFIX . 'addon_review_reminder_log');
+}
+if (!defined('TABLE_ADDON_REVIEW_REMINDER_OPTOUT')) {
+    define('TABLE_ADDON_REVIEW_REMINDER_OPTOUT', DB_PREFIX . 'addon_review_reminder_optout');
+}
